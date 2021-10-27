@@ -1,21 +1,28 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-} from 'react-native';
-import { useForm } from '../utils/CustomHooks';
+import { StyleSheet, TextInput, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import { useForm } from '../../../utils/CustomHooks';
+import { resetStackAndNavigate, signinRequest } from '../../../utils/Helpers';
+import UnauthenticatedScreen from '../../../components/UnauthenticatedScreen/UnauthenticatedScreen';
 
-export default function Login() {
-  const { onChange, onSubmit, values } = useForm(() => {}, {
-    username: '',
-    firstName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+export default function Signin({ navigation }) {
+  const { onChange, onSubmit, values } = useForm(
+    () => {
+      if (allFieldsReady()) {
+        signinRequest(values).then;
+        resetStackAndNavigate(navigation, 'Authenticated', {
+          screen: 'Home',
+        });
+      }
+    },
+    {
+      username: '',
+      firstName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  );
 
   const allFieldsReady = () => {
     const usernameLength =
@@ -28,7 +35,7 @@ export default function Login() {
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const email = emailRegex.test(String(values?.email).toLowerCase());
 
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    const passwordRegex = /^.{8,50}$/;
     const password = passwordRegex.test(String(values?.password));
 
     const confirmPassword = values?.password === values?.confirmPassword;
@@ -39,17 +46,32 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
+    <UnauthenticatedScreen
+      allFieldsReady={allFieldsReady}
+      buttonText='Register'
+      onSubmit={onSubmit}
+      bottomText={
+        <Text style={styles.bottomText}>
+          Already have an account?{' '}
+          <Text
+            onPress={() => navigation.navigate('Login')}
+            style={{ color: 'blue' }}
+          >
+            Log in
+          </Text>
+        </Text>
+      }
+    >
       <TextInput
         placeholder='Username'
         name='username'
         autoCompleteType='username'
         value={values.username}
+        autoCapitalize='none'
         onChangeText={(e) => onChange(e, 'username')}
         style={styles.field}
         placeholderTextColor='grey'
       />
-
       <TextInput
         placeholder='First Name'
         value={values.firstName}
@@ -58,17 +80,16 @@ export default function Login() {
         style={styles.field}
         placeholderTextColor='grey'
       />
-
       <TextInput
         placeholder='Email'
         autoCompleteType='email'
         keyboardType='email-address'
         value={values.email}
+        autoCapitalize='none'
         onChangeText={(e) => onChange(e, 'email')}
         style={styles.field}
         placeholderTextColor='grey'
       />
-
       <TextInput
         placeholder='Password'
         secureTextEntry={true}
@@ -77,7 +98,6 @@ export default function Login() {
         style={styles.field}
         placeholderTextColor='grey'
       />
-
       <TextInput
         placeholder='Confirm Password'
         secureTextEntry={true}
@@ -86,45 +106,22 @@ export default function Login() {
         style={styles.field}
         placeholderTextColor='grey'
       />
-
-      <TouchableOpacity
-        // onPress={() => navigation.navigate('Login')}
-        style={[
-          styles.button,
-          {
-            backgroundColor: allFieldsReady() ? '#4169e1' : 'gray',
-          },
-        ]}
-      >
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
-    </View>
+    </UnauthenticatedScreen>
   );
 }
 
+Signin.propTypes = {
+  navigation: PropTypes.shape(),
+};
+
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flex: 1,
-  },
   field: {
     margin: 10,
     padding: 12,
     width: '85%',
     borderWidth: 1,
     borderColor: '#D3D3D3',
-    color: 'gray',
+    color: 'black',
     borderRadius: 5,
-  },
-  button: {
-    width: '85%',
-    borderRadius: 25,
-    margin: 10,
-    padding: 12,
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-    fontWeight: '600',
   },
 });

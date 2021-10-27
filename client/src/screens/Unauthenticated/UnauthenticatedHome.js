@@ -1,8 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Image, SafeAreaView, Button } from 'react-native';
+import { StyleSheet, Image, SafeAreaView, Button, Text } from 'react-native';
 import logo from '../../../public/logo.png';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function UnauthenticatedHome({ navigation }) {
   console.log(navigation);
@@ -10,12 +11,23 @@ export default function UnauthenticatedHome({ navigation }) {
     <LinearGradient style={styles.container} colors={['#00e6ff', '#1c1cd0']}>
       <SafeAreaView>
         <Image style={styles.image} source={logo} />
-        <Button
-          onPress={() => navigation.navigate('Login')}
+
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Authenticated', { screen: 'Home' })
+          }
           style={styles.button}
-          title='Learn More'
-          color='white'
-        />
+        >
+          <Text style={styles.buttonText}>Log in</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Authenticated', { screen: 'Home' })
+          }
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Sign out</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </LinearGradient>
   );
@@ -37,6 +49,14 @@ const styles = StyleSheet.create({
     height: 400,
   },
   button: {
-    color: 'white',
+    width: '85%',
+    borderRadius: 25,
+    margin: 10,
+    padding: 12,
+    backgroundColor: 'white',
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontWeight: '600',
   },
 });
