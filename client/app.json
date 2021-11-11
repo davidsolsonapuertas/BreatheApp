@@ -3,7 +3,8 @@
     "name": "client",
     "slug": "client",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": ["**/*"],
+    "plugins": ["@config-plugins/react-native-ble-plx"]
   },
   "name": "client"
 }

@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import logo from '../../../public/logoblack.png';
+import logoblue from '../../../public/logoblue.png';
+import { theme } from '../../utils/Theme';
 
 export default function UnauthenticatedScreen({
   children,
@@ -18,7 +20,7 @@ export default function UnauthenticatedScreen({
 }) {
   return (
     <SafeAreaView style={styles.container}>
-      <Image style={styles.image} source={logo} />
+      <Image style={styles.image} source={allFieldsReady() ? logoblue : logo} />
       <Text style={styles.titleText}>Welcome to Just Breathe</Text>
       {children}
       <TouchableOpacity
@@ -26,7 +28,7 @@ export default function UnauthenticatedScreen({
         style={[
           styles.button,
           {
-            backgroundColor: allFieldsReady() ? '#4169e1' : 'gray',
+            backgroundColor: allFieldsReady() ? theme.blue : 'gray',
           },
         ]}
       >
@@ -39,6 +41,13 @@ export default function UnauthenticatedScreen({
 
 UnauthenticatedScreen.propTypes = {
   children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  allFieldsReady: PropTypes.func.isRequired,
+  buttonText: PropTypes.string.isRequired,
+  bottomText: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,

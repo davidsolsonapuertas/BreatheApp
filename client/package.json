@@ -7,10 +7,15 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@config-plugins/react-native-ble-plx": "^0.0.1",
     "@expo/vector-icons": "^12.0.5",
+    "@react-native-async-storage/async-storage": "^1.15.11",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native-stack": "^6.2.5",
     "expo": "~42.0.1",
+    "expo-dev-client": "^0.6.3",
+    "expo-dev-launcher": "^0.8.4",
+    "expo-dev-menu": "^0.8.4",
     "expo-linear-gradient": "~9.2.0",
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
@@ -18,6 +23,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
+    "react-native-ble-plx": "^2.0.3",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-reanimated": "~2.2.0",
     "react-native-screens": "~3.4.0",

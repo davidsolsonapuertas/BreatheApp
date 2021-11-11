@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, SafeAreaView, Image, Text } from 'react-native';
-import stat from '../../../../public/stat.png';
+import game from '../../../../public/game.png';
 import { theme } from '../../../utils/Theme';
 
-export default function Home({ navigation }) {
+export default function Breathe({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <Image style={styles.image} source={stat} />
-      <Text style={styles.title}>Your heart rate today</Text>
-      <Text style={styles.percent}>78%</Text>
-      <Text style={styles.text}>Your stress levels</Text>
+      <Image style={styles.image} source={game} />
+      <Text style={styles.title}>Stressful game</Text>
+      <Text style={styles.title}>Other Breathing exercises</Text>
     </SafeAreaView>
   );
 }
 
-Home.propTypes = {
+Breathe.propTypes = {
   navigation: PropTypes.shape(),
 };
 

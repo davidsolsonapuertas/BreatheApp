@@ -7,20 +7,20 @@ export const loginRequest = (values) => {
   });
 };
 
-export const signinRequest = async (values) => {
+export const signinRequest = (values) => {
   return postRequest('signin', {
     body: values,
   });
 };
 
-const postRequest = (endpoint, options) => {
+const postRequest = async (endpoint, options) => {
   return fetch(`${SERVER_URL}/api/${endpoint}`, {
     body: options.body ? JSON.stringify(options.body) : null,
     headers: {
       'Content-Type': 'application/json',
     },
     method: 'POST',
-  });
+  }).then((r) => r.json());
 };
 
 export const resetStackAndNavigate = (navigation, path) => {

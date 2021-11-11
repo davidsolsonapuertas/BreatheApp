@@ -13,7 +13,7 @@ exports.RegisterUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     if (user) {
-      throw new Error('Username is taken');
+      throw new Error({ username: 'Username is taken' });
     }
 
     const userId = uuid.v4();
@@ -27,15 +27,12 @@ exports.RegisterUser = async (req, res) => {
       createdAt: new Date().toISOString(),
     });
 
-    const res = await newUser.save();
-    console.log(newUser._id);
+    const savedUser = await newUser.save();
     const token = await generateAuthToken(username);
 
-    console.log(res, token);
-
-    res.send({ user: newUser, token });
+    res.status(201).send({ user: savedUser, token });
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(500).send({ errors: e.message });
   }
 };
 

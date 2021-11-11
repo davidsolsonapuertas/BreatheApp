@@ -1,12 +1,11 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Image, SafeAreaView, Button, Text } from 'react-native';
+import { StyleSheet, Image, SafeAreaView, Text } from 'react-native';
 import logo from '../../../public/logo.png';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function UnauthenticatedHome({ navigation }) {
-  console.log(navigation);
   return (
     <LinearGradient style={styles.container} colors={['#00e6ff', '#1c1cd0']}>
       <SafeAreaView>

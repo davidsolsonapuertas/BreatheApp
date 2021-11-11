@@ -6,6 +6,9 @@ import BottomBar from './src/screens/Authenticated/BottomBarIcons/BottomBarIcons
 import Signin from './src/screens/Unauthenticated/Signin/Signin';
 import Login from './src/screens/Unauthenticated/Login/Login';
 import Home from './src/screens/Authenticated/Home/Home';
+import { AuthProvider } from './src/context';
+import Breathe from './src/screens/Authenticated/Breathe/Breathe';
+import Advice from './src/screens/Authenticated/Advice/Advice';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -39,22 +42,24 @@ export default function App() {
       }
     >
       <Tab.Screen name='Home' component={Home} />
-      <Tab.Screen name='Breathe' component={Home} />
-      <Tab.Screen name='Advice' component={Home} />
+      <Tab.Screen name='Breathe' component={Breathe} />
+      <Tab.Screen name='Advice' component={Advice} />
       <Tab.Screen name='Profile' component={Home} />
     </Tab.Navigator>
   );
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name='Unauthenticated' component={Unauthenticated} />
-        <Stack.Screen name='Authenticated' component={Authenticated} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name='Unauthenticated' component={Unauthenticated} />
+          <Stack.Screen name='Authenticated' component={Authenticated} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }

@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TextInput, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { useForm } from '../../../utils/CustomHooks';
-import { resetStackAndNavigate, signinRequest } from '../../../utils/Helpers';
+import { resetStackAndNavigate } from '../../../utils/Helpers';
 import UnauthenticatedScreen from '../../../components/UnauthenticatedScreen/UnauthenticatedScreen';
+import { registerUser, useAuthDispatch } from '../../../context';
 
 export default function Signin({ navigation }) {
+  const [, setErrors] = useState();
+
+  const dispatch = useAuthDispatch();
+
   const { onChange, onSubmit, values } = useForm(
-    () => {
+    async () => {
       if (allFieldsReady()) {
-        signinRequest(values).then;
-        resetStackAndNavigate(navigation, 'Authenticated', {
-          screen: 'Home',
-        });
+        const req = await registerUser(dispatch, values);
+
+        console.log('heeey', req);
+        if (req?.token) {
+          resetStackAndNavigate(navigation, 'Authenticated', {
+            screen: 'Home',
+          });
+        } else if (req?.errors) {
+          setErrors(req.errors);
+        }
       }
     },
     {
