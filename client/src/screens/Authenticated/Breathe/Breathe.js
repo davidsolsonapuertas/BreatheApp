@@ -1,15 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, SafeAreaView, Image, Text } from 'react-native';
-import game from '../../../../public/game.png';
+import {
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import game from '../../../../public/breathe.jpg';
 import { theme } from '../../../utils/Theme';
 
 export default function Breathe({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Image style={styles.image} source={game} />
-      <Text style={styles.title}>Stressful game</Text>
-      <Text style={styles.title}>Other Breathing exercises</Text>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.text}>Participate in study</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('ExerciseOne')}
+      >
+        <Text style={styles.text}>4-7-8 breathing exercise</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -28,15 +41,16 @@ const styles = StyleSheet.create({
     width: 400,
     height: 200,
   },
-  title: {
+  button: {
+    backgroundColor: theme.blue,
+    padding: 20,
+    borderRadius: 10,
     marginTop: 20,
-    fontSize: 20,
-    fontWeight: '700',
+    height: 200,
+    width: '95%',
   },
-  percent: {
-    marginTop: 50,
-    fontSize: 80,
-    color: theme.blue,
-    fontWeight: '700',
+  text: {
+    fontSize: 20,
+    color: 'white',
   },
 });

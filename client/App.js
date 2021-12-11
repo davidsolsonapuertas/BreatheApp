@@ -7,11 +7,15 @@ import Signin from './src/screens/Unauthenticated/Signin/Signin';
 import Login from './src/screens/Unauthenticated/Login/Login';
 import Home from './src/screens/Authenticated/Home/Home';
 import { AuthProvider } from './src/context';
+import { LogBox } from 'react-native';
 import Breathe from './src/screens/Authenticated/Breathe/Breathe';
 import Advice from './src/screens/Authenticated/Advice/Advice';
+import ExerciseOne from './src/screens/Authenticated/ExerciseOne/ExerciseOne';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs(); //Ignore all log notifications
 
   const Unauthenticated = () => (
     <Stack.Navigator
@@ -41,10 +45,13 @@ export default function App() {
         }))
       }
     >
-      <Tab.Screen name='Home' component={Home} />
+      <Tab.Screen
+        name='Home'
+        component={Home}
+        options={{ headerShown: false }}
+      />
       <Tab.Screen name='Breathe' component={Breathe} />
       <Tab.Screen name='Advice' component={Advice} />
-      <Tab.Screen name='Profile' component={Home} />
     </Tab.Navigator>
   );
 
@@ -58,6 +65,7 @@ export default function App() {
         >
           <Stack.Screen name='Unauthenticated' component={Unauthenticated} />
           <Stack.Screen name='Authenticated' component={Authenticated} />
+          <Stack.Screen name='ExerciseOne' component={ExerciseOne} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

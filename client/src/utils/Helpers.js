@@ -23,6 +23,15 @@ const postRequest = async (endpoint, options) => {
   }).then((r) => r.json());
 };
 
+export const fetchArticles = async () => {
+  return fetch(
+    `https://newsapi.org/v2/everything?q=relaxation+exercises+tips&sortBy=popularity&apiKey=e32b2031915e41e6a1cb25c2eae49772`,
+    {
+      method: 'GET',
+    },
+  ).then((r) => r.json());
+};
+
 export const resetStackAndNavigate = (navigation, path) => {
   navigation.dispatch(
     CommonActions.reset({ index: 0, routes: [{ name: path }] }),

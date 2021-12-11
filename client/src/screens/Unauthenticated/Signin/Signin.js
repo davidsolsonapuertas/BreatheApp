@@ -16,7 +16,6 @@ export default function Signin({ navigation }) {
       if (allFieldsReady()) {
         const req = await registerUser(dispatch, values);
 
-        console.log('heeey', req);
         if (req?.token) {
           resetStackAndNavigate(navigation, 'Authenticated', {
             screen: 'Home',

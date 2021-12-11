@@ -8,7 +8,6 @@ exports.RegisterUser = async (req, res) => {
   try {
     const { email, password, username, firstName } = req.body;
 
-    console.log(email, password, username, firstName);
     const user = await User.findOne({ username });
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -38,27 +37,26 @@ exports.RegisterUser = async (req, res) => {
 
 exports.LoginUser = async (req, res) => {
   try {
-    let { username, password } = req.body;
-    console.log(req.body);
-    // email = email.toLowerCase();
-    // const user = await models.User.findOne({ where: { email } });
-    // if (!user) {
-    //   throw new Error('Invalid email or password');
-    // }
-    // const matched = await bcrypt.compare(password, user.password);
-    // if (!matched) {
-    //   throw new Error('Invalid email or password');
-    // }
+    let { email, password } = req.body;
+    email = email.toLowerCase();
+    const user = await models.User.findOne({ where: { email } });
+    if (!user) {
+      throw new Error('Invalid email or password');
+    }
+    const matched = await bcrypt.compare(password, user.password);
+    if (!matched) {
+      throw new Error('Invalid email or password');
+    }
 
     // // Returning true returns the plain object, and plain: true is to return the object itself without including unnecessary data.
-    // const userUpdated = await models.User.update(
-    //   { lastSeen: new Date().toISOString() },
-    //   { where: { email }, returning: true, plain: true },
-    // );
+    const userUpdated = await models.User.update(
+      { lastSeen: new Date().toISOString() },
+      { where: { email }, returning: true, plain: true },
+    );
 
     // // The response sent to the front end is userUpdated[1].dataValues because it is where Sequelize holds the user data
-    // const token = await generateAuthToken(user.userId);
-    // res.status(200).send({ user: userUpdated[1].dataValues, token });
+    const token = await generateAuthToken(user.userId);
+    res.status(200).send({ user: userUpdated[1].dataValues, token });
   } catch (e) {
     res.status(500);
     res.send(e.message);
