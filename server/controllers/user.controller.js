@@ -3,6 +3,7 @@ const uuid = require('uuid');
 const models = require('../models');
 const { generateAuthToken } = require('../utils/authHelpers.js');
 const User = require('../models/User');
+const Signal = require('../models/Signal');
 
 exports.RegisterUser = async (req, res) => {
   try {
@@ -71,4 +72,29 @@ exports.LogoutUser = async (req, res) => {
   );
   res.clearCookie('authToken');
   res.sendStatus(204);
+};
+
+exports.AddSignal = async (req, res) => {
+  try {
+    const { signal } = req.body;
+    if (!signal) {
+      throw new Error({ username: 'No signal' });
+    }
+    const newSignal = new Signal({
+      type: signal,
+      createdAt: new Date().toISOString(),
+    });
+
+    const savedSignal = await newSignal.save();
+    res.status(200).send({ signal: savedSignal });
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+    res.send(e.message);
+  }
+};
+
+exports.GetSignals = async (req, res) => {
+  const signals = await Signal.find();
+  res.status(200).send({ signals: signals });
 };
