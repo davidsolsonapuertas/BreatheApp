@@ -1,5 +1,4 @@
 const express = require('express');
-const PORT = 5001;
 const app = express();
 const routers = require('./routers');
 const cors = require('cors');
@@ -10,4 +9,12 @@ app.use(express.json());
 
 app.use('/api', routers.userRouter);
 
-app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+app.use(express.static('public'));
+
+// define the first route
+app.get('/', function (req, res) {
+  res.send('<h1>Hello World!</h1>');
+});
+
+// start the server listening for requests
+app.listen(3000, () => console.log('Server is running...'));
